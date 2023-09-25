@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/playground',function(){
+    event (new App\Events\ChatMessageEvent());
+    return null;
+});
+
+Route::get('/ws',function(){
+    return view('websocket');
+});
+
+
+Route::post('/chat-message',function(Request $request){
+    event (new App\Events\ChatMessageEvent($request->message));
+});
+
